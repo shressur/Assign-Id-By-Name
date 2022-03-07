@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Coding Challenge</title>
+    <style>
+      .code-wraper {
+        width: 80%;
+        margin: 1rem auto;
+      }
+      pre {
+        margin-top: -2rem;
+        margin-bottom: -4rem;
+      }
+      .code-test-cases {
+        display: block;
+        margin-left: -6rem;
+      }
+      .code-example {
+        display: block;
+        margin-left: -9rem;
+        font-size: 15px;
+        color: #5c5c5c;
+      }
+      .comment {
+        color: #089f1a;
+      }
+    </style>
+  </head>
+  <body>
+    <h4>
+      Problem: A hospital logging system assign id numbers to patient based on
+      their names. Ids take the form of 2 integers seperated by a decimal, so
+      for example the first patient in a log would be "1.1". When patient share
+      a last name the 2nd number in the id is increamented, so "1.1" now becomes
+      "1.2", and if a subsequent patinet had a new last name the first number is
+      increamented i.e. now the the third patient's id would be "2.1".<br />
+      Given this behavior, create a method that assigns id numbers given a list
+      of patient.
+    </h4>
+    <div class="code-wraper">
+      <p>Test cases:</p>
+      <pre>
+            <code class="code-test-cases">
+                A: Allen 	-> 1.1
+                A: Baldwin      -> 2.1
+                B: Baldwin      -> 2.2
+                A: Carter 	-> 3.1
+                C: Baldwin      -> 2.3
+                B: Allen 	-> 1.2
+                A: Davis 	-> 4.1
+                C: Allen 	-> 1.3
+            </code>
+        </pre>
+    </div>
+    <div class="code-wraper">
+      <p style="margin-top: 3rem">Code:</p>
+      <pre>
+            <code class="code-example">
+                <span>arr_uniqueNames = [];</span>
+                <span>arr_allNames = [];</span>
+                <span>function assignId(name){</span>
+                <span class="comment">    //keep track of all the patients</span>
+                <span>    arr_allNames.push(name);</span>
+                <span>    if(!arr_uniqueNames.includes(name)){</span>
+                <span class="comment">        //keep track of unique names based on the array index</span>
+                <span>        arr_uniqueNames.push(name);</span>
+                <span>    }</span>
+                <span class="comment">    //[ ].indexOf() => 0 based</span>
+                <span class="comment">    //"arr_allNames" is never empty so "[ ].filter().length" > 0 (counting duplicates)</span>
+                <span>    return (arr_uniqueNames.indexOf(name) + 1) + "." + arr_allNames.filter(e => e == name).length;</span>
+                <span>}</span>
+                <span></span>
+                <span></span>
+                <span></span>
+            </code>
+        </pre>
+      <p>
+        <em>Output in the console</em>
+      </p>
+    </div>
+
+    <script>
+      arr_uniqueNames = [];
+      arr_allNames = [];
+      function assignId(name) {
+        //keep track of all the patients
+        arr_allNames.push(name);
+        if (!arr_uniqueNames.includes(name)) {
+          //keep track of unique names based on the array index
+          arr_uniqueNames.push(name);
+        }
+        //[ ].indexOf() => 0 based
+        //"arr_allNames" is never empty so "[ ].filter().length" > 0 (counting duplicates)
+        return (
+          arr_uniqueNames.indexOf(name) +
+          1 +
+          "." +
+          arr_allNames.filter((e) => e == name).length
+        );
+      }
+      //test
+      console.log(`Allen: ${assignId("Allen")}`);
+      console.log(`Baldwin: ${assignId("Baldwin")}`);
+      console.log(`Baldwin: ${assignId("Baldwin")}`);
+      console.log(`Carter: ${assignId("Carter")}`);
+      console.log(`Baldwin: ${assignId("Baldwin")}`);
+      console.log(`Allen: ${assignId("Allen")}`);
+      console.log(`Davis: ${assignId("Davis")}`);
+      console.log(`Allen: ${assignId("Allen")}`);
+    </script>
+  </body>
+</html>
